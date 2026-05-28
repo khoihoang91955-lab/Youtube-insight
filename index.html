@@ -7,43 +7,49 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0a0a0f; color: #e8e8f0; font-family: 'DM Mono', 'Courier New', monospace; min-height: 100vh; }
-
-  header { background: #0d0d14; border-bottom: 1px solid #1e1e2e; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+  header { background: #0d0d14; border-bottom: 1px solid #1e1e2e; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
   .logo { display: flex; align-items: center; gap: 10px; }
   .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff4d4d; box-shadow: 0 0 12px #ff4d4d; animation: pulse 2s infinite; }
   .logo-text { font-size: 16px; font-weight: 800; letter-spacing: 2px; }
   .tag { background: #ff4d4d22; color: #ff4d4d; border: 1px solid #ff4d4d44; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
-  .tag.green { background: #4dff9b22; color: #4dff9b; border-color: #4dff9b44; }
   .sub { color: #6b6b80; font-size: 10px; letter-spacing: 1px; margin-top: 3px; }
+  .header-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .api-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4dff9b; }
   .api-dot { width: 8px; height: 8px; border-radius: 50%; background: #4dff9b; }
 
-  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  /* Credit box */
+  .credit-box { background: #13131a; border: 1px solid #1e1e2e; border-radius: 8px; padding: 8px 14px; display: flex; gap: 16px; align-items: center; }
+  .credit-item { text-align: center; }
+  .credit-label { color: #6b6b80; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
+  .credit-val { font-size: 14px; font-weight: 800; }
+  .credit-val.used { color: #ff4d4d; }
+  .credit-val.remain { color: #4dff9b; }
+  .credit-divider { width: 1px; height: 30px; background: #1e1e2e; }
 
-  /* API Key */
+  .container { max-width: 960px; margin: 0 auto; padding: 20px 16px; }
   .api-box { background: #13131a; border: 1px solid #ff4d4d44; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
   .api-box label { color: #ff4d4d; font-size: 12px; font-weight: 700; letter-spacing: 1px; display: block; margin-bottom: 6px; }
   .api-box small { color: #6b6b80; font-size: 11px; display: block; margin-bottom: 14px; line-height: 1.6; }
   .api-box small span { color: #ff8c42; }
   .row { display: flex; gap: 10px; }
-  input { flex: 1; background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; color: #e8e8f0; font-size: 13px; font-family: inherit; outline: none; }
-  input:focus { border-color: #ff4d4d66; }
+  input, select { flex: 1; background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; color: #e8e8f0; font-size: 12px; font-family: inherit; outline: none; }
+  input:focus, select:focus { border-color: #ff4d4d66; }
+  select option { background: #13131a; }
   button { background: #ff4d4d; border: none; border-radius: 8px; padding: 10px 20px; color: #fff; font-weight: 700; font-size: 12px; cursor: pointer; font-family: inherit; letter-spacing: 1px; white-space: nowrap; }
   button:disabled { background: #1e1e2e; cursor: not-allowed; color: #6b6b80; }
   button.secondary { background: none; border: 1px solid #1e1e2e; color: #6b6b80; font-size: 11px; padding: 6px 14px; }
 
-  /* Tabs */
   .tabs { display: flex; border-bottom: 1px solid #1e1e2e; margin-bottom: 20px; }
   .tab { background: none; border: none; border-bottom: 2px solid transparent; color: #6b6b80; padding: 10px 18px; cursor: pointer; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: -1px; border-radius: 0; }
   .tab.active { color: #ff4d4d; border-bottom-color: #ff4d4d; }
 
-  /* Search bar */
-  .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+  /* Filter bar */
+  .filter-bar { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; margin-bottom: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .filter-group { display: flex; flex-direction: column; gap: 5px; }
+  .filter-label { color: #6b6b80; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
 
-  /* Error */
+  .search-bar { display: flex; gap: 10px; margin-bottom: 16px; }
   .error { background: #ff4d4d11; border: 1px solid #ff4d4d44; border-radius: 8px; padding: 12px 16px; color: #ff4d4d; font-size: 12px; margin-bottom: 16px; }
-
-  /* Video grid */
   .video-list { display: flex; flex-direction: column; gap: 8px; }
   .video-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; transition: border-color 0.2s; }
   .video-card:hover, .video-card.active { border-color: #ff4d4d88; background: #1a1a2e; }
@@ -52,42 +58,34 @@
   .video-info { flex: 1; min-width: 0; }
   .video-title { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
   .tags { display: flex; gap: 5px; flex-wrap: wrap; }
-  .badge { background: #ff8c4222; color: #ff8c42; border: 1px solid #ff8c4244; border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+  .badge { background: #ff8c4222; color: #ff8c42; border: 1px solid #ff8c4244; border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700; }
   .badge.green { background: #4dff9b22; color: #4dff9b; border-color: #4dff9b44; }
   .badge.yellow { background: #ffd16622; color: #ffd166; border-color: #ffd16644; }
   .badge.gray { background: #1e1e2e; color: #6b6b80; border-color: #1e1e2e; }
+  .badge.blue { background: #4d9fff22; color: #4d9fff; border-color: #4d9fff44; }
 
-  /* Detail panel */
   .detail { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
   .detail img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
   .detail-body { padding: 14px; }
   .detail-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
   .detail-sub { color: #6b6b80; font-size: 11px; margin-bottom: 12px; }
   .stats-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-  .stat-box { background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; flex: 1; min-width: 80px; }
+  .stat-box { background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; flex: 1; min-width: 70px; }
   .stat-label { color: #6b6b80; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
-  .stat-val { font-size: 18px; font-weight: 800; }
-
-  /* Sentiment */
+  .stat-val { font-size: 16px; font-weight: 800; }
   .sentiment-box { background: #0a0a0f; border-radius: 8px; padding: 12px; border: 1px solid #1e1e2e; }
   .sent-label { font-size: 10px; color: #6b6b80; letter-spacing: 1px; margin-bottom: 8px; }
   .sent-bar-wrap { display: flex; align-items: center; gap: 10px; }
   .sent-bar-bg { flex: 1; height: 6px; background: #1e1e2e; border-radius: 3px; overflow: hidden; }
   .sent-bar { height: 100%; border-radius: 3px; transition: width 0.5s; }
-
-  /* Comments */
   .section-label { color: #6b6b80; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; margin-top: 16px; }
-  .comments { max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+  .comments { max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
   .comment { background: #13131a; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px; }
   .comment-author { font-size: 10px; color: #ff8c42; font-weight: 700; margin-bottom: 4px; }
-  .comment-text { font-size: 11px; line-height: 1.5; color: #e8e8f0; }
-
-  /* Empty */
+  .comment-text { font-size: 11px; line-height: 1.5; }
   .empty { border: 1px dashed #1e1e2e; border-radius: 10px; padding: 50px 20px; text-align: center; color: #6b6b80; font-size: 12px; letter-spacing: 1px; }
-
-  /* Channel */
-  .channel-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; gap: 14px; align-items: center; }
-  .ch-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ff4d4d; object-fit: cover; }
+  .channel-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .ch-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ff4d4d; object-fit: cover; flex-shrink: 0; }
   .ch-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
   .ch-desc { color: #6b6b80; font-size: 11px; margin-bottom: 10px; line-height: 1.5; }
   .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -95,14 +93,13 @@
   .vg-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
   .vg-body { padding: 8px; }
   .vg-title { font-size: 10px; font-weight: 700; line-height: 1.4; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media(max-width: 600px) { .grid2 { grid-template-columns: 1fr; } .video-grid { grid-template-columns: repeat(2,1fr); } }
-
+  @media(max-width: 640px) { .grid2 { grid-template-columns: 1fr; } .filter-bar { grid-template-columns: 1fr; } .credit-box { display: none; } }
   .reset-row { text-align: right; margin-top: 24px; }
   ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #0a0a0f; } ::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 2px; }
   @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
   .loading { color: #6b6b80; font-size: 12px; padding: 12px; letter-spacing: 1px; }
+  .dur-badge { background: #4d9fff22; color: #4d9fff; border: 1px solid #4d9fff44; border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -116,14 +113,32 @@
     </div>
     <div class="sub">FAMILY STORIES RESEARCH DASHBOARD</div>
   </div>
-  <div class="api-status" id="apiStatus" style="display:none">
-    <div class="api-dot"></div> API CONNECTED
+  <div class="header-right">
+    <!-- Credit tracker -->
+    <div class="credit-box" id="creditBox" style="display:none">
+      <div class="credit-item">
+        <div class="credit-label">Đã dùng (Used)</div>
+        <div class="credit-val used" id="creditUsed">0</div>
+      </div>
+      <div class="credit-divider"></div>
+      <div class="credit-item">
+        <div class="credit-label">Còn lại (Remain)</div>
+        <div class="credit-val remain" id="creditRemain">10,000</div>
+      </div>
+      <div class="credit-divider"></div>
+      <div class="credit-item">
+        <div class="credit-label">Giới hạn/ngày (Daily)</div>
+        <div class="credit-val" style="color:#ffd166">10,000</div>
+      </div>
+    </div>
+    <div class="api-status" id="apiStatus" style="display:none">
+      <div class="api-dot"></div> API CONNECTED
+    </div>
   </div>
 </header>
 
 <div class="container">
 
-  <!-- API Key -->
   <div class="api-box" id="apiBox">
     <label>⚡ BƯỚC 1 — NHẬP YOUTUBE API KEY</label>
     <small>Lấy free tại: <span>console.cloud.google.com</span> → APIs & Services → YouTube Data API v3 → Credentials</small>
@@ -133,19 +148,58 @@
     </div>
   </div>
 
-  <!-- Main App -->
   <div id="mainApp" style="display:none">
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('trending', this)">🔥 TRENDING</button>
-      <button class="tab" onclick="switchTab('channel', this)">🔍 SPY CHANNEL</button>
+      <button class="tab active" onclick="switchTab('trending',this)">🔥 TRENDING</button>
+      <button class="tab" onclick="switchTab('channel',this)">🔍 SPY CHANNEL</button>
     </div>
 
     <!-- TRENDING -->
     <div id="tab-trending">
       <div class="search-bar">
-        <input id="queryInput" value="family stories" placeholder="Nhập từ khóa..." />
+        <input id="queryInput" value="family stories" placeholder="Từ khoá (Keyword)..." />
         <button onclick="fetchVideos()" id="searchBtn">PHÂN TÍCH</button>
       </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <div class="filter-label">⏱ Độ dài tối thiểu (Min Duration)</div>
+          <select id="filterDuration">
+            <option value="long">Trên 20 phút (>20 min) ← mặc định</option>
+            <option value="medium">4–20 phút (4–20 min)</option>
+            <option value="any">Tất cả (Any)</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">📊 Sắp xếp (Sort By)</div>
+          <select id="filterSort">
+            <option value="viewCount">Views cao nhất</option>
+            <option value="relevance">Liên quan nhất (Relevance)</option>
+            <option value="date">Mới nhất (Newest)</option>
+            <option value="rating">Rating cao nhất</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">📅 Thời gian đăng (Published)</div>
+          <select id="filterDate">
+            <option value="">Tất cả thời gian (All time)</option>
+            <option value="7">7 ngày qua</option>
+            <option value="30">30 ngày qua</option>
+            <option value="90">90 ngày qua</option>
+            <option value="365">1 năm qua</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">🔢 Số kết quả (Results)</div>
+          <select id="filterCount">
+            <option value="10">10 video</option>
+            <option value="20">20 video</option>
+            <option value="50">50 video</option>
+          </select>
+        </div>
+      </div>
+
       <div id="errorBox" class="error" style="display:none"></div>
       <div class="grid2">
         <div>
@@ -172,18 +226,39 @@
       <button class="secondary" onclick="resetAPI()">↩ ĐỔI API KEY</button>
     </div>
   </div>
-
 </div>
 
 <script>
 let API_KEY = '';
 let currentVideos = [];
+let creditsUsed = 0;
+const DAILY_LIMIT = 10000;
+
+// Credit costs per API call
+const COST = { search: 100, videos: 1, comments: 1, channel: 100 };
+
+function addCredit(cost) {
+  creditsUsed += cost;
+  document.getElementById('creditUsed').textContent = creditsUsed.toLocaleString();
+  document.getElementById('creditRemain').textContent = Math.max(0, DAILY_LIMIT - creditsUsed).toLocaleString();
+  const remain = DAILY_LIMIT - creditsUsed;
+  document.getElementById('creditRemain').style.color = remain < 1000 ? '#ff4d4d' : remain < 3000 ? '#ffd166' : '#4dff9b';
+}
 
 function fmtNum(n) {
-  n = parseInt(n) || 0;
-  if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
-  if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
+  n = parseInt(n)||0;
+  if(n>=1e6) return (n/1e6).toFixed(1)+'M';
+  if(n>=1e3) return (n/1e3).toFixed(1)+'K';
   return n.toString();
+}
+
+function fmtDuration(iso) {
+  if(!iso) return '';
+  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if(!m) return '';
+  const h = parseInt(m[1])||0, min = parseInt(m[2])||0, s = parseInt(m[3])||0;
+  if(h>0) return `${h}h${min}m`;
+  return `${min}m${s>0?s+'s':''}`;
 }
 
 function er(v,l,c) {
@@ -198,31 +273,33 @@ function sentColor(s) {
 }
 
 function analyzeSentiment(comments) {
-  const pos = ['love','amazing','great','beautiful','awesome','wonderful','happy','best','cute','sweet','incredible','inspiring','touching','heartwarming','wow','perfect','blessed'];
-  const neg = ['hate','bad','terrible','worst','boring','fake','awful','dislike','annoying','disappointing','sad','cry'];
+  const pos = ['love','amazing','great','beautiful','awesome','wonderful','happy','best','cute','sweet','incredible','inspiring','touching','heartwarming','wow','perfect','blessed','adore','favorite','fav'];
+  const neg = ['hate','bad','terrible','worst','boring','fake','awful','dislike','annoying','disappointing','sad','cry','cringe','stupid','waste'];
   let p=0,n=0;
   comments.forEach(c => {
-    const t = (c.snippet?.topLevelComment?.snippet?.textDisplay||'').toLowerCase();
-    pos.forEach(w=>{ if(t.includes(w)) p++; });
-    neg.forEach(w=>{ if(t.includes(w)) n++; });
+    const t=(c.snippet?.topLevelComment?.snippet?.textDisplay||'').toLowerCase();
+    pos.forEach(w=>{if(t.includes(w))p++;});
+    neg.forEach(w=>{if(t.includes(w))n++;});
   });
   return Math.round(p/(p+n||1)*100);
 }
 
 function connectAPI() {
   const key = document.getElementById('apiKeyInput').value.trim();
-  if (!key) return alert('Vui lòng nhập API Key!');
+  if(!key) return alert('Vui lòng nhập API Key!');
   API_KEY = key;
   document.getElementById('apiBox').style.display = 'none';
   document.getElementById('mainApp').style.display = 'block';
   document.getElementById('apiStatus').style.display = 'flex';
+  document.getElementById('creditBox').style.display = 'flex';
 }
 
 function resetAPI() {
-  API_KEY = '';
+  API_KEY = ''; creditsUsed = 0;
   document.getElementById('apiBox').style.display = 'block';
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('apiStatus').style.display = 'none';
+  document.getElementById('creditBox').style.display = 'none';
   document.getElementById('apiKeyInput').value = '';
   document.getElementById('videoList').innerHTML = '';
   document.getElementById('detailPanel').innerHTML = '<div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>';
@@ -238,7 +315,12 @@ function switchTab(name, btn) {
 
 async function fetchVideos() {
   const q = document.getElementById('queryInput').value.trim();
-  if (!q) return;
+  if(!q) return;
+  const duration = document.getElementById('filterDuration').value;
+  const sort = document.getElementById('filterSort').value;
+  const dateRange = document.getElementById('filterDate').value;
+  const maxResults = document.getElementById('filterCount').value;
+
   const btn = document.getElementById('searchBtn');
   btn.disabled = true; btn.textContent = 'ĐANG TẢI...';
   document.getElementById('errorBox').style.display = 'none';
@@ -246,17 +328,40 @@ async function fetchVideos() {
   document.getElementById('detailPanel').innerHTML = '<div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>';
 
   try {
-    const sRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&regionCode=US&type=video&maxResults=10&order=viewCount&key=${API_KEY}`);
+    let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&regionCode=US&type=video&maxResults=${maxResults}&order=${sort}&videoDuration=${duration}&key=${API_KEY}`;
+    if(dateRange) {
+      const d = new Date();
+      d.setDate(d.getDate() - parseInt(dateRange));
+      url += `&publishedAfter=${d.toISOString()}`;
+    }
+
+    const sRes = await fetch(url);
     const sData = await sRes.json();
-    if (sData.error) throw new Error(sData.error.message);
+    addCredit(COST.search);
+    if(sData.error) throw new Error(sData.error.message);
+    if(!sData.items?.length) throw new Error('Không tìm thấy video nào với bộ lọc này');
+
     const ids = sData.items.map(i=>i.id.videoId).join(',');
-    const vRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${ids}&key=${API_KEY}`);
+    const vRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${ids}&key=${API_KEY}`);
     const vData = await vRes.json();
-    if (vData.error) throw new Error(vData.error.message);
+    addCredit(COST.videos * ids.split(',').length);
+    if(vData.error) throw new Error(vData.error.message);
+
     currentVideos = vData.items || [];
+
+    // Filter: chỉ giữ video >= 15 phút nếu chọn long
+    if(duration === 'long') {
+      currentVideos = currentVideos.filter(v => {
+        const d = v.contentDetails?.duration || '';
+        const m = d.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
+        const h = parseInt(m?.[1])||0, min = parseInt(m?.[2])||0;
+        return h*60+min >= 15;
+      });
+    }
+
     renderVideoList(currentVideos, q);
   } catch(e) {
-    document.getElementById('errorBox').textContent = '⚠️ ' + (e.message||'Lỗi khi tải dữ liệu');
+    document.getElementById('errorBox').textContent = '⚠️ '+(e.message||'Lỗi khi tải dữ liệu');
     document.getElementById('errorBox').style.display = 'block';
     document.getElementById('videoList').innerHTML = '';
   }
@@ -264,11 +369,12 @@ async function fetchVideos() {
 }
 
 function renderVideoList(videos, q) {
-  document.getElementById('resultLabel').textContent = `TOP ${videos.length} VIDEOS — "${q.toUpperCase()}" — US`;
+  document.getElementById('resultLabel').textContent = `${videos.length} VIDEOS — "${q.toUpperCase()}" — US`;
   const list = document.getElementById('videoList');
+  if(!videos.length) { list.innerHTML = '<div class="loading">Không có kết quả. Thử đổi bộ lọc.</div>'; return; }
   list.innerHTML = videos.map((v,i) => {
     const rate = er(v.statistics?.viewCount, v.statistics?.likeCount, v.statistics?.commentCount);
-    const erColor = parseFloat(rate)>2 ? 'green' : 'gray';
+    const dur = fmtDuration(v.contentDetails?.duration);
     return `<div class="video-card" onclick="showDetail(${i})" id="vc-${i}">
       <div class="rank">${i+1}</div>
       <div class="video-info">
@@ -276,7 +382,8 @@ function renderVideoList(videos, q) {
         <div class="tags">
           <span class="badge">${fmtNum(v.statistics?.viewCount)} views</span>
           <span class="badge green">${fmtNum(v.statistics?.likeCount)} likes</span>
-          <span class="badge ${erColor}">${rate}% ER</span>
+          <span class="badge ${parseFloat(rate)>2?'green':'gray'}">${rate}% ER</span>
+          ${dur?`<span class="dur-badge">⏱ ${dur}</span>`:''}
         </div>
       </div>
     </div>`;
@@ -287,51 +394,43 @@ async function showDetail(idx) {
   const v = currentVideos[idx];
   document.querySelectorAll('.video-card').forEach(c=>c.classList.remove('active'));
   document.getElementById('vc-'+idx)?.classList.add('active');
-
+  const dur = fmtDuration(v.contentDetails?.duration);
   const panel = document.getElementById('detailPanel');
   panel.innerHTML = `
     <div class="detail">
       <img src="${v.snippet?.thumbnails?.high?.url||v.snippet?.thumbnails?.default?.url||''}" alt="">
       <div class="detail-body">
         <div class="detail-title">${v.snippet?.title||''}</div>
-        <div class="detail-sub">${v.snippet?.channelTitle||''} • ${new Date(v.snippet?.publishedAt).toLocaleDateString('vi-VN')}</div>
+        <div class="detail-sub">${v.snippet?.channelTitle||''} • ${new Date(v.snippet?.publishedAt).toLocaleDateString('vi-VN')} ${dur?'• ⏱ '+dur:''}</div>
         <div class="stats-row">
           <div class="stat-box"><div class="stat-label">Views</div><div class="stat-val" style="color:#ff8c42">${fmtNum(v.statistics?.viewCount)}</div></div>
           <div class="stat-box"><div class="stat-label">Likes</div><div class="stat-val" style="color:#4dff9b">${fmtNum(v.statistics?.likeCount)}</div></div>
           <div class="stat-box"><div class="stat-label">Comments</div><div class="stat-val" style="color:#ffd166">${fmtNum(v.statistics?.commentCount)}</div></div>
         </div>
-        <div class="sentiment-box" id="sentimentBox">
-          <div class="sent-label">SENTIMENT — đang phân tích...</div>
-        </div>
+        <div class="sentiment-box" id="sentimentBox"><div class="sent-label">SENTIMENT — đang phân tích...</div></div>
       </div>
     </div>
     <div class="section-label" id="commentLabel">TOP COMMENTS</div>
-    <div class="comments" id="commentList"><div class="loading">Đang tải comments...</div></div>
-  `;
+    <div class="comments" id="commentList"><div class="loading">Đang tải comments...</div></div>`;
 
-  // Load comments
   try {
     const cRes = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${v.id}&maxResults=20&order=relevance&key=${API_KEY}`);
     const cData = await cRes.json();
-    const comments = cData.items || [];
+    addCredit(COST.comments);
+    const comments = cData.items||[];
     const score = analyzeSentiment(comments);
     const color = sentColor(score);
-    const label = score>=70?'Positive':score>=40?'Neutral':'Negative';
-
+    const label = score>=70?'Tích cực (Positive)':score>=40?'Trung lập (Neutral)':'Tiêu cực (Negative)';
     document.getElementById('sentimentBox').innerHTML = `
       <div class="sent-label">SENTIMENT COMMENTS</div>
       <div class="sent-bar-wrap">
         <div class="sent-bar-bg"><div class="sent-bar" style="width:${score}%;background:${color}"></div></div>
         <span class="badge" style="background:${color}22;color:${color};border-color:${color}44">${score}% ${label}</span>
       </div>`;
-
     document.getElementById('commentLabel').textContent = `TOP COMMENTS (${comments.length})`;
-    document.getElementById('commentList').innerHTML = comments.length ? comments.map(c => {
-      const s = c.snippet?.topLevelComment?.snippet;
-      return `<div class="comment">
-        <div class="comment-author">${s?.authorDisplayName||''} • ❤️ ${fmtNum(s?.likeCount)}</div>
-        <div class="comment-text">${(s?.textDisplay||'').slice(0,150)}${(s?.textDisplay||'').length>150?'...':''}</div>
-      </div>`;
+    document.getElementById('commentList').innerHTML = comments.length ? comments.map(c=>{
+      const s=c.snippet?.topLevelComment?.snippet;
+      return `<div class="comment"><div class="comment-author">${s?.authorDisplayName||''} • ❤️ ${fmtNum(s?.likeCount)}</div><div class="comment-text">${(s?.textDisplay||'').slice(0,150)}${(s?.textDisplay||'').length>150?'...':''}</div></div>`;
     }).join('') : '<div class="loading">Không có comment</div>';
   } catch(e) {
     document.getElementById('sentimentBox').innerHTML = '<div class="sent-label" style="color:#ff4d4d">Không tải được comments</div>';
@@ -340,33 +439,33 @@ async function showDetail(idx) {
 
 async function fetchChannel() {
   const q = document.getElementById('channelInput').value.trim();
-  if (!q) return;
+  if(!q) return;
   const btn = document.getElementById('channelBtn');
   btn.disabled = true; btn.textContent = 'ĐANG TẢI...';
   document.getElementById('channelError').style.display = 'none';
   document.getElementById('channelResult').innerHTML = '<div class="loading">Đang tải...</div>';
-
   try {
     const sRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&type=channel&maxResults=1&key=${API_KEY}`);
     const sData = await sRes.json();
-    if (sData.error) throw new Error(sData.error.message);
-    if (!sData.items?.length) throw new Error('Không tìm thấy channel');
+    addCredit(COST.channel);
+    if(sData.error) throw new Error(sData.error.message);
+    if(!sData.items?.length) throw new Error('Không tìm thấy channel');
     const cid = sData.items[0].id.channelId;
-
     const chRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${cid}&key=${API_KEY}`);
     const chData = await chRes.json();
+    addCredit(1);
     const ch = chData.items?.[0];
-
     const vRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${cid}&type=video&order=date&maxResults=6&key=${API_KEY}`);
     const vData = await vRes.json();
+    addCredit(COST.search);
     let vids = [];
-    if (vData.items?.length) {
+    if(vData.items?.length) {
       const ids = vData.items.map(i=>i.id.videoId).join(',');
       const vsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${ids}&key=${API_KEY}`);
       const vsData = await vsRes.json();
-      vids = vsData.items || [];
+      addCredit(ids.split(',').length);
+      vids = vsData.items||[];
     }
-
     document.getElementById('channelResult').innerHTML = `
       <div class="channel-card">
         <img class="ch-avatar" src="${ch.snippet?.thumbnails?.default?.url||''}" alt="">
@@ -380,30 +479,25 @@ async function fetchChannel() {
           </div>
         </div>
       </div>
-      <div class="section-label">VIDEO GẦN ĐÂY NHẤT</div>
-      <div class="video-grid">
-        ${vids.map(v=>`
-          <div class="vg-card">
-            <img src="${v.snippet?.thumbnails?.medium?.url||''}" alt="">
-            <div class="vg-body">
-              <div class="vg-title">${v.snippet?.title||''}</div>
-              <div class="tags">
-                <span class="badge">${fmtNum(v.statistics?.viewCount)}</span>
-                <span class="badge green">${fmtNum(v.statistics?.likeCount)} ❤️</span>
-              </div>
-            </div>
-          </div>`).join('')}
+      <div class="section-label">VIDEO GẦN ĐÂY NHẤT (RECENT VIDEOS)</div>
+      <div class="video-grid">${vids.map(v=>`
+        <div class="vg-card">
+          <img src="${v.snippet?.thumbnails?.medium?.url||''}" alt="">
+          <div class="vg-body">
+            <div class="vg-title">${v.snippet?.title||''}</div>
+            <div class="tags"><span class="badge">${fmtNum(v.statistics?.viewCount)}</span><span class="badge green">${fmtNum(v.statistics?.likeCount)} ❤️</span></div>
+          </div>
+        </div>`).join('')}
       </div>`;
   } catch(e) {
-    document.getElementById('channelError').textContent = '⚠️ ' + (e.message||'Lỗi');
+    document.getElementById('channelError').textContent = '⚠️ '+(e.message||'Lỗi');
     document.getElementById('channelError').style.display = 'block';
     document.getElementById('channelResult').innerHTML = '';
   }
   btn.disabled = false; btn.textContent = 'SPY';
 }
 
-document.getElementById('apiKeyInput').addEventListener('keydown', e => { if(e.key==='Enter') connectAPI(); });
-document.getElementById('queryInput')?.addEventListener('keydown', e => { if(e.key==='Enter') fetchVideos(); });
+document.getElementById('apiKeyInput').addEventListener('keydown', e=>{ if(e.key==='Enter') connectAPI(); });
 </script>
 </body>
 </html>
