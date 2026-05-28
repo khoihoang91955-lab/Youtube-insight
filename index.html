@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YT Insight — Family Stories US</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0f; color: #e8e8f0; font-family: 'DM Mono', 'Courier New', monospace; min-height: 100vh; }
+
+  header { background: #0d0d14; border-bottom: 1px solid #1e1e2e; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff4d4d; box-shadow: 0 0 12px #ff4d4d; animation: pulse 2s infinite; }
+  .logo-text { font-size: 16px; font-weight: 800; letter-spacing: 2px; }
+  .tag { background: #ff4d4d22; color: #ff4d4d; border: 1px solid #ff4d4d44; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+  .tag.green { background: #4dff9b22; color: #4dff9b; border-color: #4dff9b44; }
+  .sub { color: #6b6b80; font-size: 10px; letter-spacing: 1px; margin-top: 3px; }
+  .api-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4dff9b; }
+  .api-dot { width: 8px; height: 8px; border-radius: 50%; background: #4dff9b; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  /* API Key */
+  .api-box { background: #13131a; border: 1px solid #ff4d4d44; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .api-box label { color: #ff4d4d; font-size: 12px; font-weight: 700; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+  .api-box small { color: #6b6b80; font-size: 11px; display: block; margin-bottom: 14px; line-height: 1.6; }
+  .api-box small span { color: #ff8c42; }
+  .row { display: flex; gap: 10px; }
+  input { flex: 1; background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; color: #e8e8f0; font-size: 13px; font-family: inherit; outline: none; }
+  input:focus { border-color: #ff4d4d66; }
+  button { background: #ff4d4d; border: none; border-radius: 8px; padding: 10px 20px; color: #fff; font-weight: 700; font-size: 12px; cursor: pointer; font-family: inherit; letter-spacing: 1px; white-space: nowrap; }
+  button:disabled { background: #1e1e2e; cursor: not-allowed; color: #6b6b80; }
+  button.secondary { background: none; border: 1px solid #1e1e2e; color: #6b6b80; font-size: 11px; padding: 6px 14px; }
+
+  /* Tabs */
+  .tabs { display: flex; border-bottom: 1px solid #1e1e2e; margin-bottom: 20px; }
+  .tab { background: none; border: none; border-bottom: 2px solid transparent; color: #6b6b80; padding: 10px 18px; cursor: pointer; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: -1px; border-radius: 0; }
+  .tab.active { color: #ff4d4d; border-bottom-color: #ff4d4d; }
+
+  /* Search bar */
+  .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+
+  /* Error */
+  .error { background: #ff4d4d11; border: 1px solid #ff4d4d44; border-radius: 8px; padding: 12px 16px; color: #ff4d4d; font-size: 12px; margin-bottom: 16px; }
+
+  /* Video grid */
+  .video-list { display: flex; flex-direction: column; gap: 8px; }
+  .video-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; transition: border-color 0.2s; }
+  .video-card:hover, .video-card.active { border-color: #ff4d4d88; background: #1a1a2e; }
+  .rank { min-width: 22px; height: 22px; background: #1e1e2e; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #6b6b80; }
+  .video-card.active .rank { background: #ff4d4d; color: #fff; }
+  .video-info { flex: 1; min-width: 0; }
+  .video-title { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
+  .tags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .badge { background: #ff8c4222; color: #ff8c42; border: 1px solid #ff8c4244; border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+  .badge.green { background: #4dff9b22; color: #4dff9b; border-color: #4dff9b44; }
+  .badge.yellow { background: #ffd16622; color: #ffd166; border-color: #ffd16644; }
+  .badge.gray { background: #1e1e2e; color: #6b6b80; border-color: #1e1e2e; }
+
+  /* Detail panel */
+  .detail { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+  .detail img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .detail-body { padding: 14px; }
+  .detail-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .detail-sub { color: #6b6b80; font-size: 11px; margin-bottom: 12px; }
+  .stats-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .stat-box { background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; flex: 1; min-width: 80px; }
+  .stat-label { color: #6b6b80; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+  .stat-val { font-size: 18px; font-weight: 800; }
+
+  /* Sentiment */
+  .sentiment-box { background: #0a0a0f; border-radius: 8px; padding: 12px; border: 1px solid #1e1e2e; }
+  .sent-label { font-size: 10px; color: #6b6b80; letter-spacing: 1px; margin-bottom: 8px; }
+  .sent-bar-wrap { display: flex; align-items: center; gap: 10px; }
+  .sent-bar-bg { flex: 1; height: 6px; background: #1e1e2e; border-radius: 3px; overflow: hidden; }
+  .sent-bar { height: 100%; border-radius: 3px; transition: width 0.5s; }
+
+  /* Comments */
+  .section-label { color: #6b6b80; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; margin-top: 16px; }
+  .comments { max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+  .comment { background: #13131a; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px; }
+  .comment-author { font-size: 10px; color: #ff8c42; font-weight: 700; margin-bottom: 4px; }
+  .comment-text { font-size: 11px; line-height: 1.5; color: #e8e8f0; }
+
+  /* Empty */
+  .empty { border: 1px dashed #1e1e2e; border-radius: 10px; padding: 50px 20px; text-align: center; color: #6b6b80; font-size: 12px; letter-spacing: 1px; }
+
+  /* Channel */
+  .channel-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; gap: 14px; align-items: center; }
+  .ch-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ff4d4d; object-fit: cover; }
+  .ch-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .ch-desc { color: #6b6b80; font-size: 11px; margin-bottom: 10px; line-height: 1.5; }
+  .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .vg-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; overflow: hidden; }
+  .vg-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .vg-body { padding: 8px; }
+  .vg-title { font-size: 10px; font-weight: 700; line-height: 1.4; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width: 600px) { .grid2 { grid-template-columns: 1fr; } .video-grid { grid-template-columns: repeat(2,1fr); } }
+
+  .reset-row { text-align: right; margin-top: 24px; }
+  ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #0a0a0f; } ::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 2px; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+  .loading { color: #6b6b80; font-size: 12px; padding: 12px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">
+      <div class="dot"></div>
+      <span class="logo-text">YT INSIGHT</span>
+      <span class="tag">US MARKET</span>
+    </div>
+    <div class="sub">FAMILY STORIES RESEARCH DASHBOARD</div>
+  </div>
+  <div class="api-status" id="apiStatus" style="display:none">
+    <div class="api-dot"></div> API CONNECTED
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- API Key -->
+  <div class="api-box" id="apiBox">
+    <label>⚡ BƯỚC 1 — NHẬP YOUTUBE API KEY</label>
+    <small>Lấy free tại: <span>console.cloud.google.com</span> → APIs & Services → YouTube Data API v3 → Credentials</small>
+    <div class="row">
+      <input type="password" id="apiKeyInput" placeholder="Paste API Key vào đây..." />
+      <button onclick="connectAPI()">KẾT NỐI</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="mainApp" style="display:none">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('trending', this)">🔥 TRENDING</button>
+      <button class="tab" onclick="switchTab('channel', this)">🔍 SPY CHANNEL</button>
+    </div>
+
+    <!-- TRENDING -->
+    <div id="tab-trending">
+      <div class="search-bar">
+        <input id="queryInput" value="family stories" placeholder="Nhập từ khóa..." />
+        <button onclick="fetchVideos()" id="searchBtn">PHÂN TÍCH</button>
+      </div>
+      <div id="errorBox" class="error" style="display:none"></div>
+      <div class="grid2">
+        <div>
+          <div class="section-label" id="resultLabel"></div>
+          <div class="video-list" id="videoList"></div>
+        </div>
+        <div id="detailPanel">
+          <div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANNEL SPY -->
+    <div id="tab-channel" style="display:none">
+      <div class="search-bar">
+        <input id="channelInput" placeholder="Tên channel đối thủ (vd: The LaBrant Fam...)" />
+        <button onclick="fetchChannel()" id="channelBtn">SPY</button>
+      </div>
+      <div id="channelError" class="error" style="display:none"></div>
+      <div id="channelResult"></div>
+    </div>
+
+    <div class="reset-row">
+      <button class="secondary" onclick="resetAPI()">↩ ĐỔI API KEY</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let API_KEY = '';
+let currentVideos = [];
+
+function fmtNum(n) {
+  n = parseInt(n) || 0;
+  if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
+  return n.toString();
+}
+
+function er(v,l,c) {
+  const views = parseInt(v)||1;
+  return (((parseInt(l)||0)+(parseInt(c)||0))/views*100).toFixed(2);
+}
+
+function sentColor(s) {
+  if(s>=70) return '#4dff9b';
+  if(s>=40) return '#ffd166';
+  return '#ff4d4d';
+}
+
+function analyzeSentiment(comments) {
+  const pos = ['love','amazing','great','beautiful','awesome','wonderful','happy','best','cute','sweet','incredible','inspiring','touching','heartwarming','wow','perfect','blessed'];
+  const neg = ['hate','bad','terrible','worst','boring','fake','awful','dislike','annoying','disappointing','sad','cry'];
+  let p=0,n=0;
+  comments.forEach(c => {
+    const t = (c.snippet?.topLevelComment?.snippet?.textDisplay||'').toLowerCase();
+    pos.forEach(w=>{ if(t.includes(w)) p++; });
+    neg.forEach(w=>{ if(t.includes(w)) n++; });
+  });
+  return Math.round(p/(p+n||1)*100);
+}
+
+function connectAPI() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (!key) return alert('Vui lòng nhập API Key!');
+  API_KEY = key;
+  document.getElementById('apiBox').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  document.getElementById('apiStatus').style.display = 'flex';
+}
+
+function resetAPI() {
+  API_KEY = '';
+  document.getElementById('apiBox').style.display = 'block';
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('apiStatus').style.display = 'none';
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('videoList').innerHTML = '';
+  document.getElementById('detailPanel').innerHTML = '<div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>';
+  document.getElementById('channelResult').innerHTML = '';
+}
+
+function switchTab(name, btn) {
+  document.getElementById('tab-trending').style.display = name==='trending'?'block':'none';
+  document.getElementById('tab-channel').style.display = name==='channel'?'block':'none';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function fetchVideos() {
+  const q = document.getElementById('queryInput').value.trim();
+  if (!q) return;
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true; btn.textContent = 'ĐANG TẢI...';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('videoList').innerHTML = '<div class="loading">Đang tải dữ liệu...</div>';
+  document.getElementById('detailPanel').innerHTML = '<div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>';
+
+  try {
+    const sRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&regionCode=US&type=video&maxResults=10&order=viewCount&key=${API_KEY}`);
+    const sData = await sRes.json();
+    if (sData.error) throw new Error(sData.error.message);
+    const ids = sData.items.map(i=>i.id.videoId).join(',');
+    const vRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${ids}&key=${API_KEY}`);
+    const vData = await vRes.json();
+    if (vData.error) throw new Error(vData.error.message);
+    currentVideos = vData.items || [];
+    renderVideoList(currentVideos, q);
+  } catch(e) {
+    document.getElementById('errorBox').textContent = '⚠️ ' + (e.message||'Lỗi khi tải dữ liệu');
+    document.getElementById('errorBox').style.display = 'block';
+    document.getElementById('videoList').innerHTML = '';
+  }
+  btn.disabled = false; btn.textContent = 'PHÂN TÍCH';
+}
+
+function renderVideoList(videos, q) {
+  document.getElementById('resultLabel').textContent = `TOP ${videos.length} VIDEOS — "${q.toUpperCase()}" — US`;
+  const list = document.getElementById('videoList');
+  list.innerHTML = videos.map((v,i) => {
+    const rate = er(v.statistics?.viewCount, v.statistics?.likeCount, v.statistics?.commentCount);
+    const erColor = parseFloat(rate)>2 ? 'green' : 'gray';
+    return `<div class="video-card" onclick="showDetail(${i})" id="vc-${i}">
+      <div class="rank">${i+1}</div>
+      <div class="video-info">
+        <div class="video-title">${v.snippet?.title||''}</div>
+        <div class="tags">
+          <span class="badge">${fmtNum(v.statistics?.viewCount)} views</span>
+          <span class="badge green">${fmtNum(v.statistics?.likeCount)} likes</span>
+          <span class="badge ${erColor}">${rate}% ER</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function showDetail(idx) {
+  const v = currentVideos[idx];
+  document.querySelectorAll('.video-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('vc-'+idx)?.classList.add('active');
+
+  const panel = document.getElementById('detailPanel');
+  panel.innerHTML = `
+    <div class="detail">
+      <img src="${v.snippet?.thumbnails?.high?.url||v.snippet?.thumbnails?.default?.url||''}" alt="">
+      <div class="detail-body">
+        <div class="detail-title">${v.snippet?.title||''}</div>
+        <div class="detail-sub">${v.snippet?.channelTitle||''} • ${new Date(v.snippet?.publishedAt).toLocaleDateString('vi-VN')}</div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-label">Views</div><div class="stat-val" style="color:#ff8c42">${fmtNum(v.statistics?.viewCount)}</div></div>
+          <div class="stat-box"><div class="stat-label">Likes</div><div class="stat-val" style="color:#4dff9b">${fmtNum(v.statistics?.likeCount)}</div></div>
+          <div class="stat-box"><div class="stat-label">Comments</div><div class="stat-val" style="color:#ffd166">${fmtNum(v.statistics?.commentCount)}</div></div>
+        </div>
+        <div class="sentiment-box" id="sentimentBox">
+          <div class="sent-label">SENTIMENT — đang phân tích...</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-label" id="commentLabel">TOP COMMENTS</div>
+    <div class="comments" id="commentList"><div class="loading">Đang tải comments...</div></div>
+  `;
+
+  // Load comments
+  try {
+    const cRes = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${v.id}&maxResults=20&order=relevance&key=${API_KEY}`);
+    const cData = await cRes.json();
+    const comments = cData.items || [];
+    const score = analyzeSentiment(comments);
+    const color = sentColor(score);
+    const label = score>=70?'Positive':score>=40?'Neutral':'Negative';
+
+    document.getElementById('sentimentBox').innerHTML = `
+      <div class="sent-label">SENTIMENT COMMENTS</div>
+      <div class="sent-bar-wrap">
+        <div class="sent-bar-bg"><div class="sent-bar" style="width:${score}%;background:${color}"></div></div>
+        <span class="badge" style="background:${color}22;color:${color};border-color:${color}44">${score}% ${label}</span>
+      </div>`;
+
+    document.getElementById('commentLabel').textContent = `TOP COMMENTS (${comments.length})`;
+    document.getElementById('commentList').innerHTML = comments.length ? comments.map(c => {
+      const s = c.snippet?.topLevelComment?.snippet;
+      return `<div class="comment">
+        <div class="comment-author">${s?.authorDisplayName||''} • ❤️ ${fmtNum(s?.likeCount)}</div>
+        <div class="comment-text">${(s?.textDisplay||'').slice(0,150)}${(s?.textDisplay||'').length>150?'...':''}</div>
+      </div>`;
+    }).join('') : '<div class="loading">Không có comment</div>';
+  } catch(e) {
+    document.getElementById('sentimentBox').innerHTML = '<div class="sent-label" style="color:#ff4d4d">Không tải được comments</div>';
+  }
+}
+
+async function fetchChannel() {
+  const q = document.getElementById('channelInput').value.trim();
+  if (!q) return;
+  const btn = document.getElementById('channelBtn');
+  btn.disabled = true; btn.textContent = 'ĐANG TẢI...';
+  document.getElementById('channelError').style.display = 'none';
+  document.getElementById('channelResult').innerHTML = '<div class="loading">Đang tải...</div>';
+
+  try {
+    const sRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&type=channel&maxResults=1&key=${API_KEY}`);
+    const sData = await sRes.json();
+    if (sData.error) throw new Error(sData.error.message);
+    if (!sData.items?.length) throw new Error('Không tìm thấy channel');
+    const cid = sData.items[0].id.channelId;
+
+    const chRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${cid}&key=${API_KEY}`);
+    const chData = await chRes.json();
+    const ch = chData.items?.[0];
+
+    const vRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${cid}&type=video&order=date&maxResults=6&key=${API_KEY}`);
+    const vData = await vRes.json();
+    let vids = [];
+    if (vData.items?.length) {
+      const ids = vData.items.map(i=>i.id.videoId).join(',');
+      const vsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${ids}&key=${API_KEY}`);
+      const vsData = await vsRes.json();
+      vids = vsData.items || [];
+    }
+
+    document.getElementById('channelResult').innerHTML = `
+      <div class="channel-card">
+        <img class="ch-avatar" src="${ch.snippet?.thumbnails?.default?.url||''}" alt="">
+        <div style="flex:1">
+          <div class="ch-name">${ch.snippet?.title||''}</div>
+          <div class="ch-desc">${(ch.snippet?.description||'').slice(0,100)}...</div>
+          <div class="stats-row">
+            <div class="stat-box"><div class="stat-label">Subscribers</div><div class="stat-val" style="color:#ff4d4d">${fmtNum(ch.statistics?.subscriberCount)}</div></div>
+            <div class="stat-box"><div class="stat-label">Total Views</div><div class="stat-val" style="color:#ff8c42">${fmtNum(ch.statistics?.viewCount)}</div></div>
+            <div class="stat-box"><div class="stat-label">Videos</div><div class="stat-val" style="color:#ffd166">${fmtNum(ch.statistics?.videoCount)}</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-label">VIDEO GẦN ĐÂY NHẤT</div>
+      <div class="video-grid">
+        ${vids.map(v=>`
+          <div class="vg-card">
+            <img src="${v.snippet?.thumbnails?.medium?.url||''}" alt="">
+            <div class="vg-body">
+              <div class="vg-title">${v.snippet?.title||''}</div>
+              <div class="tags">
+                <span class="badge">${fmtNum(v.statistics?.viewCount)}</span>
+                <span class="badge green">${fmtNum(v.statistics?.likeCount)} ❤️</span>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  } catch(e) {
+    document.getElementById('channelError').textContent = '⚠️ ' + (e.message||'Lỗi');
+    document.getElementById('channelError').style.display = 'block';
+    document.getElementById('channelResult').innerHTML = '';
+  }
+  btn.disabled = false; btn.textContent = 'SPY';
+}
+
+document.getElementById('apiKeyInput').addEventListener('keydown', e => { if(e.key==='Enter') connectAPI(); });
+document.getElementById('queryInput')?.addEventListener('keydown', e => { if(e.key==='Enter') fetchVideos(); });
+</script>
+</body>
+</html>
