@@ -3,77 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YT Insight — Family Stories US</title>
+<title>YT Insight — Wisdom & Self-Dev US</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0a0a0f; color: #e8e8f0; font-family: 'DM Mono', 'Courier New', monospace; min-height: 100vh; }
   header { background: #0d0d14; border-bottom: 1px solid #1e1e2e; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
   .logo { display: flex; align-items: center; gap: 10px; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff4d4d; box-shadow: 0 0 12px #ff4d4d; animation: pulse 2s infinite; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #7c3aed; box-shadow: 0 0 12px #7c3aed; animation: pulse 2s infinite; }
   .logo-text { font-size: 16px; font-weight: 800; letter-spacing: 2px; }
-  .tag { background: #ff4d4d22; color: #ff4d4d; border: 1px solid #ff4d4d44; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+  .tag { background: #7c3aed22; color: #a78bfa; border: 1px solid #7c3aed44; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
   .sub { color: #6b6b80; font-size: 10px; letter-spacing: 1px; margin-top: 3px; }
   .header-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .api-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4dff9b; }
   .api-dot { width: 8px; height: 8px; border-radius: 50%; background: #4dff9b; }
-
-  /* Credit box */
   .credit-box { background: #13131a; border: 1px solid #1e1e2e; border-radius: 8px; padding: 8px 14px; display: flex; gap: 16px; align-items: center; }
   .credit-item { text-align: center; }
   .credit-label { color: #6b6b80; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
   .credit-val { font-size: 14px; font-weight: 800; }
-  .credit-val.used { color: #ff4d4d; }
-  .credit-val.remain { color: #4dff9b; }
   .credit-divider { width: 1px; height: 30px; background: #1e1e2e; }
-
   .container { max-width: 960px; margin: 0 auto; padding: 20px 16px; }
-  .api-box { background: #13131a; border: 1px solid #ff4d4d44; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
-  .api-box label { color: #ff4d4d; font-size: 12px; font-weight: 700; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+  .api-box { background: #13131a; border: 1px solid #7c3aed44; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .api-box label { color: #a78bfa; font-size: 12px; font-weight: 700; letter-spacing: 1px; display: block; margin-bottom: 6px; }
   .api-box small { color: #6b6b80; font-size: 11px; display: block; margin-bottom: 14px; line-height: 1.6; }
   .api-box small span { color: #ff8c42; }
   .row { display: flex; gap: 10px; }
   input, select { flex: 1; background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; color: #e8e8f0; font-size: 12px; font-family: inherit; outline: none; }
-  input:focus, select:focus { border-color: #ff4d4d66; }
+  input:focus, select:focus { border-color: #7c3aed66; }
   select option { background: #13131a; }
-  button { background: #ff4d4d; border: none; border-radius: 8px; padding: 10px 20px; color: #fff; font-weight: 700; font-size: 12px; cursor: pointer; font-family: inherit; letter-spacing: 1px; white-space: nowrap; }
+  button { background: #7c3aed; border: none; border-radius: 8px; padding: 10px 20px; color: #fff; font-weight: 700; font-size: 12px; cursor: pointer; font-family: inherit; letter-spacing: 1px; white-space: nowrap; }
   button:disabled { background: #1e1e2e; cursor: not-allowed; color: #6b6b80; }
   button.secondary { background: none; border: 1px solid #1e1e2e; color: #6b6b80; font-size: 11px; padding: 6px 14px; }
-
   .tabs { display: flex; border-bottom: 1px solid #1e1e2e; margin-bottom: 20px; }
   .tab { background: none; border: none; border-bottom: 2px solid transparent; color: #6b6b80; padding: 10px 18px; cursor: pointer; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: -1px; border-radius: 0; }
-  .tab.active { color: #ff4d4d; border-bottom-color: #ff4d4d; }
+  .tab.active { color: #a78bfa; border-bottom-color: #7c3aed; }
 
-  /* Filter bar */
+  /* Niche presets */
+  .presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .preset-btn { background: #13131a; border: 1px solid #1e1e2e; border-radius: 20px; padding: 6px 14px; color: #6b6b80; font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit; letter-spacing: 1px; transition: all 0.2s; }
+  .preset-btn:hover, .preset-btn.active { background: #7c3aed22; border-color: #7c3aed; color: #a78bfa; }
+  .preset-label { color: #6b6b80; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+
   .filter-bar { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; margin-bottom: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .filter-group { display: flex; flex-direction: column; gap: 5px; }
   .filter-label { color: #6b6b80; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
-
-  .search-bar { display: flex; gap: 10px; margin-bottom: 16px; }
+  .search-bar { display: flex; gap: 10px; margin-bottom: 12px; }
   .error { background: #ff4d4d11; border: 1px solid #ff4d4d44; border-radius: 8px; padding: 12px 16px; color: #ff4d4d; font-size: 12px; margin-bottom: 16px; }
+
   .video-list { display: flex; flex-direction: column; gap: 8px; }
   .video-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; transition: border-color 0.2s; }
-  .video-card:hover, .video-card.active { border-color: #ff4d4d88; background: #1a1a2e; }
+  .video-card:hover, .video-card.active { border-color: #7c3aed88; background: #13111e; }
   .rank { min-width: 22px; height: 22px; background: #1e1e2e; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #6b6b80; }
-  .video-card.active .rank { background: #ff4d4d; color: #fff; }
+  .video-card.active .rank { background: #7c3aed; color: #fff; }
   .video-info { flex: 1; min-width: 0; }
   .video-title { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
   .tags { display: flex; gap: 5px; flex-wrap: wrap; }
   .badge { background: #ff8c4222; color: #ff8c42; border: 1px solid #ff8c4244; border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700; }
   .badge.green { background: #4dff9b22; color: #4dff9b; border-color: #4dff9b44; }
+  .badge.purple { background: #7c3aed22; color: #a78bfa; border-color: #7c3aed44; }
   .badge.yellow { background: #ffd16622; color: #ffd166; border-color: #ffd16644; }
   .badge.gray { background: #1e1e2e; color: #6b6b80; border-color: #1e1e2e; }
-  .badge.blue { background: #4d9fff22; color: #4d9fff; border-color: #4d9fff44; }
+  .badge.red { background: #ff000022; color: #ff4444; border-color: #ff444444; }
 
   .detail { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
   .detail img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
   .detail-body { padding: 14px; }
   .detail-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
-  .detail-sub { color: #6b6b80; font-size: 11px; margin-bottom: 12px; }
+  .detail-sub { color: #6b6b80; font-size: 11px; margin-bottom: 10px; }
   .stats-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
   .stat-box { background: #0a0a0f; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; flex: 1; min-width: 70px; }
   .stat-label { color: #6b6b80; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
   .stat-val { font-size: 16px; font-weight: 800; }
-  .sentiment-box { background: #0a0a0f; border-radius: 8px; padding: 12px; border: 1px solid #1e1e2e; }
+  .sentiment-box { background: #0a0a0f; border-radius: 8px; padding: 12px; border: 1px solid #1e1e2e; margin-bottom: 10px; }
   .sent-label { font-size: 10px; color: #6b6b80; letter-spacing: 1px; margin-bottom: 8px; }
   .sent-bar-wrap { display: flex; align-items: center; gap: 10px; }
   .sent-bar-bg { flex: 1; height: 6px; background: #1e1e2e; border-radius: 3px; overflow: hidden; }
@@ -81,11 +81,11 @@
   .section-label { color: #6b6b80; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; margin-top: 16px; }
   .comments { max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
   .comment { background: #13131a; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px; }
-  .comment-author { font-size: 10px; color: #ff8c42; font-weight: 700; margin-bottom: 4px; }
+  .comment-author { font-size: 10px; color: #a78bfa; font-weight: 700; margin-bottom: 4px; }
   .comment-text { font-size: 11px; line-height: 1.5; }
   .empty { border: 1px dashed #1e1e2e; border-radius: 10px; padding: 50px 20px; text-align: center; color: #6b6b80; font-size: 12px; letter-spacing: 1px; }
   .channel-card { background: #13131a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; gap: 14px; align-items: flex-start; }
-  .ch-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ff4d4d; object-fit: cover; flex-shrink: 0; }
+  .ch-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #7c3aed; object-fit: cover; flex-shrink: 0; }
   .ch-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
   .ch-desc { color: #6b6b80; font-size: 11px; margin-bottom: 10px; line-height: 1.5; }
   .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -99,7 +99,7 @@
   ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #0a0a0f; } ::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 2px; }
   @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
   .loading { color: #6b6b80; font-size: 12px; padding: 12px; letter-spacing: 1px; }
-  .dur-badge { background: #4d9fff22; color: #4d9fff; border: 1px solid #4d9fff44; border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700; }
+  .yt-btn { display: inline-block; background: #ff0000; color: #fff; border-radius: 6px; padding: 7px 16px; font-size: 11px; font-weight: 700; text-decoration: none; letter-spacing: 1px; margin-bottom: 12px; }
 </style>
 </head>
 <body>
@@ -109,25 +109,24 @@
     <div class="logo">
       <div class="dot"></div>
       <span class="logo-text">YT INSIGHT</span>
-      <span class="tag">US MARKET</span>
+      <span class="tag">WISDOM · US 20-35</span>
     </div>
-    <div class="sub">FAMILY STORIES RESEARCH DASHBOARD</div>
+    <div class="sub">SELF-DEV / INNER PEACE / GEN Z RESEARCH — PHÂN TÍCH KÊNH WISDOM & PHÁT TRIỂN BẢN THÂN</div>
   </div>
   <div class="header-right">
-    <!-- Credit tracker -->
     <div class="credit-box" id="creditBox" style="display:none">
       <div class="credit-item">
         <div class="credit-label">Đã dùng (Used)</div>
-        <div class="credit-val used" id="creditUsed">0</div>
+        <div class="credit-val" style="color:#ff4d4d" id="creditUsed">0</div>
       </div>
       <div class="credit-divider"></div>
       <div class="credit-item">
         <div class="credit-label">Còn lại (Remain)</div>
-        <div class="credit-val remain" id="creditRemain">10,000</div>
+        <div class="credit-val" style="color:#4dff9b" id="creditRemain">10,000</div>
       </div>
       <div class="credit-divider"></div>
       <div class="credit-item">
-        <div class="credit-label">Giới hạn/ngày (Daily)</div>
+        <div class="credit-label">Giới hạn/ngày (Daily limit)</div>
         <div class="credit-val" style="color:#ffd166">10,000</div>
       </div>
     </div>
@@ -138,10 +137,9 @@
 </header>
 
 <div class="container">
-
   <div class="api-box" id="apiBox">
-    <label>⚡ BƯỚC 1 — NHẬP YOUTUBE API KEY</label>
-    <small>Lấy free tại: <span>console.cloud.google.com</span> → APIs & Services → YouTube Data API v3 → Credentials</small>
+    <label>⚡ NHẬP YOUTUBE API KEY — Lấy miễn phí tại console.cloud.google.com</label>
+    <small>APIs & Services → YouTube Data API v3 → Credentials → <span>Create API Key</span></small>
     <div class="row">
       <input type="password" id="apiKeyInput" placeholder="Paste API Key vào đây..." />
       <button onclick="connectAPI()">KẾT NỐI</button>
@@ -150,31 +148,46 @@
 
   <div id="mainApp" style="display:none">
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('trending',this)">🔥 TRENDING</button>
+      <button class="tab active" onclick="switchTab('trending',this)">🔥 TRENDING VIDEO</button>
       <button class="tab" onclick="switchTab('channel',this)">🔍 SPY CHANNEL</button>
     </div>
 
     <!-- TRENDING -->
     <div id="tab-trending">
-      <div class="search-bar">
-        <input id="queryInput" value="family stories" placeholder="Từ khoá (Keyword)..." />
+
+      <!-- Niche Presets -->
+      <div class="preset-label">🎯 Chủ đề nhanh (Quick niche presets) — nhấn để tìm ngay:</div>
+      <div class="presets">
+        <button class="preset-btn" onclick="applyPreset('quarter life crisis', this)">😰 Quarter Life Crisis</button>
+        <button class="preset-btn" onclick="applyPreset('inner peace young adults', this)">☮️ Inner Peace (Bình thản)</button>
+        <button class="preset-btn" onclick="applyPreset('Buddhist wisdom beginners', this)">🧘 Buddhist Wisdom (Phật học)</button>
+        <button class="preset-btn" onclick="applyPreset('introverts guide life', this)">🤫 Introverts (Hướng nội)</button>
+        <button class="preset-btn" onclick="applyPreset('self development Gen Z', this)">🚀 Self-Dev Gen Z</button>
+        <button class="preset-btn" onclick="applyPreset('stoicism daily life', this)">⚖️ Stoicism (Khắc kỷ)</button>
+        <button class="preset-btn" onclick="applyPreset('mindfulness anxiety', this)">🌿 Mindfulness (Chánh niệm)</button>
+        <button class="preset-btn" onclick="applyPreset('toxic family healing', this)">💔 Toxic Family (Gia đình độc hại)</button>
+        <button class="preset-btn" onclick="applyPreset('finding purpose 20s', this)">🎯 Purpose in 20s (Mục đích sống)</button>
+        <button class="preset-btn" onclick="applyPreset('emotional healing philosophy', this)">🌱 Emotional Healing (Chữa lành)</button>
+      </div>
+
+      <div class="search-bar" style="margin-top:14px">
+        <input id="queryInput" value="quarter life crisis" placeholder="Từ khoá (Keyword)..." />
         <button onclick="fetchVideos()" id="searchBtn">PHÂN TÍCH</button>
       </div>
 
-      <!-- Filter bar -->
       <div class="filter-bar">
         <div class="filter-group">
           <div class="filter-label">⏱ Độ dài tối thiểu (Min Duration)</div>
           <select id="filterDuration">
-            <option value="long">Trên 20 phút (>20 min) ← mặc định</option>
-            <option value="medium">4–20 phút (4–20 min)</option>
+            <option value="long">Trên 20 phút (>20 min)</option>
+            <option value="medium" selected>4–20 phút (4–20 min) ← mặc định</option>
             <option value="any">Tất cả (Any)</option>
           </select>
         </div>
         <div class="filter-group">
           <div class="filter-label">📊 Sắp xếp (Sort By)</div>
           <select id="filterSort">
-            <option value="viewCount">Views cao nhất</option>
+            <option value="viewCount">Views cao nhất (Most viewed)</option>
             <option value="relevance">Liên quan nhất (Relevance)</option>
             <option value="date">Mới nhất (Newest)</option>
             <option value="rating">Rating cao nhất</option>
@@ -184,10 +197,10 @@
           <div class="filter-label">📅 Thời gian đăng (Published)</div>
           <select id="filterDate">
             <option value="">Tất cả thời gian (All time)</option>
-            <option value="7">7 ngày qua</option>
-            <option value="30">30 ngày qua</option>
-            <option value="90">90 ngày qua</option>
-            <option value="365">1 năm qua</option>
+            <option value="7">7 ngày qua (7 days)</option>
+            <option value="30">30 ngày qua (30 days)</option>
+            <option value="90">90 ngày qua (90 days)</option>
+            <option value="365">1 năm qua (1 year)</option>
           </select>
         </div>
         <div class="filter-group">
@@ -207,15 +220,25 @@
           <div class="video-list" id="videoList"></div>
         </div>
         <div id="detailPanel">
-          <div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>
+          <div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT<br><br>(Click a video to see details)</div>
         </div>
       </div>
     </div>
 
     <!-- CHANNEL SPY -->
     <div id="tab-channel" style="display:none">
+      <div class="preset-label">🎯 Channel mẫu để spy (Reference channels to study):</div>
+      <div class="presets" style="margin-bottom:14px">
+        <button class="preset-btn" onclick="applyChannel('HealthyGamerGG', this)">🎮 HealthyGamerGG</button>
+        <button class="preset-btn" onclick="applyChannel('Einzelganger', this)">🧠 Einzelgänger</button>
+        <button class="preset-btn" onclick="applyChannel('Better Ideas', this)">💡 Better Ideas</button>
+        <button class="preset-btn" onclick="applyChannel('Pursuit of Wonder', this)">🌌 Pursuit of Wonder</button>
+        <button class="preset-btn" onclick="applyChannel('Sisyphus 55', this)">⚙️ Sisyphus 55</button>
+        <button class="preset-btn" onclick="applyChannel('Silent Revenge with Dad', this)">👤 Silent Revenge w/ Dad</button>
+        <button class="preset-btn" onclick="applyChannel('Awakening with Russell', this)">🌿 Awakening Russell</button>
+      </div>
       <div class="search-bar">
-        <input id="channelInput" placeholder="Tên channel đối thủ (vd: The LaBrant Fam...)" />
+        <input id="channelInput" placeholder="Tên channel (Channel name)..." />
         <button onclick="fetchChannel()" id="channelBtn">SPY</button>
       </div>
       <div id="channelError" class="error" style="display:none"></div>
@@ -233,15 +256,13 @@ let API_KEY = '';
 let currentVideos = [];
 let creditsUsed = 0;
 const DAILY_LIMIT = 10000;
-
-// Credit costs per API call
 const COST = { search: 100, videos: 1, comments: 1, channel: 100 };
 
 function addCredit(cost) {
   creditsUsed += cost;
   document.getElementById('creditUsed').textContent = creditsUsed.toLocaleString();
-  document.getElementById('creditRemain').textContent = Math.max(0, DAILY_LIMIT - creditsUsed).toLocaleString();
-  const remain = DAILY_LIMIT - creditsUsed;
+  const remain = Math.max(0, DAILY_LIMIT - creditsUsed);
+  document.getElementById('creditRemain').textContent = remain.toLocaleString();
   document.getElementById('creditRemain').style.color = remain < 1000 ? '#ff4d4d' : remain < 3000 ? '#ffd166' : '#4dff9b';
 }
 
@@ -256,9 +277,9 @@ function fmtDuration(iso) {
   if(!iso) return '';
   const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
   if(!m) return '';
-  const h = parseInt(m[1])||0, min = parseInt(m[2])||0, s = parseInt(m[3])||0;
+  const h = parseInt(m[1])||0, min = parseInt(m[2])||0;
   if(h>0) return `${h}h${min}m`;
-  return `${min}m${s>0?s+'s':''}`;
+  return `${min}m`;
 }
 
 function er(v,l,c) {
@@ -273,8 +294,8 @@ function sentColor(s) {
 }
 
 function analyzeSentiment(comments) {
-  const pos = ['love','amazing','great','beautiful','awesome','wonderful','happy','best','cute','sweet','incredible','inspiring','touching','heartwarming','wow','perfect','blessed','adore','favorite','fav'];
-  const neg = ['hate','bad','terrible','worst','boring','fake','awful','dislike','annoying','disappointing','sad','cry','cringe','stupid','waste'];
+  const pos = ['love','amazing','great','beautiful','awesome','wonderful','happy','best','helpful','insightful','changed','incredible','inspiring','touching','wow','perfect','blessed','thank','needed','exactly','resonates','wisdom','peaceful','calm'];
+  const neg = ['hate','bad','terrible','worst','boring','fake','awful','dislike','annoying','disappointing','useless','waste','wrong','misleading'];
   let p=0,n=0;
   comments.forEach(c => {
     const t=(c.snippet?.topLevelComment?.snippet?.textDisplay||'').toLowerCase();
@@ -282,6 +303,20 @@ function analyzeSentiment(comments) {
     neg.forEach(w=>{if(t.includes(w))n++;});
   });
   return Math.round(p/(p+n||1)*100);
+}
+
+function applyPreset(keyword, btn) {
+  document.getElementById('queryInput').value = keyword;
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  fetchVideos();
+}
+
+function applyChannel(name, btn) {
+  document.getElementById('channelInput').value = name;
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  fetchChannel();
 }
 
 function connectAPI() {
@@ -304,6 +339,8 @@ function resetAPI() {
   document.getElementById('videoList').innerHTML = '';
   document.getElementById('detailPanel').innerHTML = '<div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>';
   document.getElementById('channelResult').innerHTML = '';
+  document.getElementById('creditUsed').textContent = '0';
+  document.getElementById('creditRemain').textContent = '10,000';
 }
 
 function switchTab(name, btn) {
@@ -320,13 +357,11 @@ async function fetchVideos() {
   const sort = document.getElementById('filterSort').value;
   const dateRange = document.getElementById('filterDate').value;
   const maxResults = document.getElementById('filterCount').value;
-
   const btn = document.getElementById('searchBtn');
   btn.disabled = true; btn.textContent = 'ĐANG TẢI...';
   document.getElementById('errorBox').style.display = 'none';
-  document.getElementById('videoList').innerHTML = '<div class="loading">Đang tải dữ liệu...</div>';
+  document.getElementById('videoList').innerHTML = '<div class="loading">Đang tải dữ liệu... (Loading...)</div>';
   document.getElementById('detailPanel').innerHTML = '<div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>';
-
   try {
     let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&regionCode=US&relevanceLanguage=en&type=video&maxResults=${maxResults}&order=${sort}&videoDuration=${duration}&key=${API_KEY}`;
     if(dateRange) {
@@ -334,31 +369,17 @@ async function fetchVideos() {
       d.setDate(d.getDate() - parseInt(dateRange));
       url += `&publishedAfter=${d.toISOString()}`;
     }
-
     const sRes = await fetch(url);
     const sData = await sRes.json();
     addCredit(COST.search);
     if(sData.error) throw new Error(sData.error.message);
-    if(!sData.items?.length) throw new Error('Không tìm thấy video nào với bộ lọc này');
-
+    if(!sData.items?.length) throw new Error('Không tìm thấy video. Thử đổi bộ lọc.');
     const ids = sData.items.map(i=>i.id.videoId).join(',');
     const vRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${ids}&key=${API_KEY}`);
     const vData = await vRes.json();
     addCredit(COST.videos * ids.split(',').length);
     if(vData.error) throw new Error(vData.error.message);
-
     currentVideos = vData.items || [];
-
-    // Filter: chỉ giữ video >= 15 phút nếu chọn long
-    if(duration === 'long') {
-      currentVideos = currentVideos.filter(v => {
-        const d = v.contentDetails?.duration || '';
-        const m = d.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
-        const h = parseInt(m?.[1])||0, min = parseInt(m?.[2])||0;
-        return h*60+min >= 15;
-      });
-    }
-
     renderVideoList(currentVideos, q);
   } catch(e) {
     document.getElementById('errorBox').textContent = '⚠️ '+(e.message||'Lỗi khi tải dữ liệu');
@@ -384,8 +405,8 @@ function renderVideoList(videos, q) {
           <span class="badge">${fmtNum(v.statistics?.viewCount)} views</span>
           <span class="badge green">${fmtNum(v.statistics?.likeCount)} likes</span>
           <span class="badge ${parseFloat(rate)>2?'green':'gray'}">${rate}% ER</span>
-          ${dur?`<span class="dur-badge">⏱ ${dur}</span>`:''}
-          <a href="${ytUrl}" target="_blank" onclick="event.stopPropagation()" style="background:#ff000022;color:#ff4444;border:1px solid #ff444444;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;text-decoration:none;">▶ YouTube</a>
+          ${dur?`<span class="badge purple">⏱ ${dur}</span>`:''}
+          <a href="${ytUrl}" target="_blank" onclick="event.stopPropagation()" class="badge red">▶ YT</a>
         </div>
       </div>
     </div>`;
@@ -397,6 +418,7 @@ async function showDetail(idx) {
   document.querySelectorAll('.video-card').forEach(c=>c.classList.remove('active'));
   document.getElementById('vc-'+idx)?.classList.add('active');
   const dur = fmtDuration(v.contentDetails?.duration);
+  const ytUrl = `https://www.youtube.com/watch?v=${v.id}`;
   const panel = document.getElementById('detailPanel');
   panel.innerHTML = `
     <div class="detail">
@@ -404,18 +426,17 @@ async function showDetail(idx) {
       <div class="detail-body">
         <div class="detail-title">${v.snippet?.title||''}</div>
         <div class="detail-sub">${v.snippet?.channelTitle||''} • ${new Date(v.snippet?.publishedAt).toLocaleDateString('vi-VN')} ${dur?'• ⏱ '+dur:''}</div>
-        <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="display:inline-block;margin-bottom:12px;background:#ff0000;color:#fff;border-radius:6px;padding:7px 16px;font-size:11px;font-weight:700;text-decoration:none;letter-spacing:1px;">▶ XEM TRÊN YOUTUBE</a>
+        <a href="${ytUrl}" target="_blank" class="yt-btn">▶ XEM TRÊN YOUTUBE</a>
         <div class="stats-row">
           <div class="stat-box"><div class="stat-label">Views</div><div class="stat-val" style="color:#ff8c42">${fmtNum(v.statistics?.viewCount)}</div></div>
           <div class="stat-box"><div class="stat-label">Likes</div><div class="stat-val" style="color:#4dff9b">${fmtNum(v.statistics?.likeCount)}</div></div>
           <div class="stat-box"><div class="stat-label">Comments</div><div class="stat-val" style="color:#ffd166">${fmtNum(v.statistics?.commentCount)}</div></div>
         </div>
-        <div class="sentiment-box" id="sentimentBox"><div class="sent-label">SENTIMENT — đang phân tích...</div></div>
+        <div class="sentiment-box" id="sentimentBox"><div class="sent-label">SENTIMENT (Cảm xúc) — đang phân tích...</div></div>
       </div>
     </div>
-    <div class="section-label" id="commentLabel">TOP COMMENTS</div>
+    <div class="section-label" id="commentLabel">TOP COMMENTS (Bình luận nổi bật)</div>
     <div class="comments" id="commentList"><div class="loading">Đang tải comments...</div></div>`;
-
   try {
     const cRes = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${v.id}&maxResults=20&order=relevance&key=${API_KEY}`);
     const cData = await cRes.json();
@@ -425,18 +446,19 @@ async function showDetail(idx) {
     const color = sentColor(score);
     const label = score>=70?'Tích cực (Positive)':score>=40?'Trung lập (Neutral)':'Tiêu cực (Negative)';
     document.getElementById('sentimentBox').innerHTML = `
-      <div class="sent-label">SENTIMENT COMMENTS</div>
+      <div class="sent-label">SENTIMENT — CẢM XÚC BÌNH LUẬN</div>
       <div class="sent-bar-wrap">
         <div class="sent-bar-bg"><div class="sent-bar" style="width:${score}%;background:${color}"></div></div>
         <span class="badge" style="background:${color}22;color:${color};border-color:${color}44">${score}% ${label}</span>
       </div>`;
-    document.getElementById('commentLabel').textContent = `TOP COMMENTS (${comments.length})`;
+    document.getElementById('commentLabel').textContent = `TOP COMMENTS — BÌNH LUẬN NỔI BẬT (${comments.length})`;
     document.getElementById('commentList').innerHTML = comments.length ? comments.map(c=>{
       const s=c.snippet?.topLevelComment?.snippet;
-      return `<div class="comment"><div class="comment-author">${s?.authorDisplayName||''} • ❤️ ${fmtNum(s?.likeCount)}</div><div class="comment-text">${(s?.textDisplay||'').slice(0,150)}${(s?.textDisplay||'').length>150?'...':''}</div></div>`;
+      return `<div class="comment"><div class="comment-author">${s?.authorDisplayName||''} • ❤️ ${fmtNum(s?.likeCount)}</div><div class="comment-text">${(s?.textDisplay||'').slice(0,180)}${(s?.textDisplay||'').length>180?'...':''}</div></div>`;
     }).join('') : '<div class="loading">Không có comment</div>';
   } catch(e) {
     document.getElementById('sentimentBox').innerHTML = '<div class="sent-label" style="color:#ff4d4d">Không tải được comments</div>';
+    document.getElementById('commentList').innerHTML = '';
   }
 }
 
@@ -446,7 +468,7 @@ async function fetchChannel() {
   const btn = document.getElementById('channelBtn');
   btn.disabled = true; btn.textContent = 'ĐANG TẢI...';
   document.getElementById('channelError').style.display = 'none';
-  document.getElementById('channelResult').innerHTML = '<div class="loading">Đang tải...</div>';
+  document.getElementById('channelResult').innerHTML = '<div class="loading">Đang phân tích channel... (Analyzing channel...)</div>';
   try {
     const sRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&type=channel&maxResults=1&key=${API_KEY}`);
     const sData = await sRes.json();
@@ -458,37 +480,47 @@ async function fetchChannel() {
     const chData = await chRes.json();
     addCredit(1);
     const ch = chData.items?.[0];
-    const vRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${cid}&type=video&order=date&maxResults=6&key=${API_KEY}`);
+    const vRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${cid}&type=video&order=viewCount&maxResults=6&key=${API_KEY}`);
     const vData = await vRes.json();
     addCredit(COST.search);
     let vids = [];
     if(vData.items?.length) {
       const ids = vData.items.map(i=>i.id.videoId).join(',');
-      const vsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${ids}&key=${API_KEY}`);
+      const vsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,contentDetails&id=${ids}&key=${API_KEY}`);
       const vsData = await vsRes.json();
       addCredit(ids.split(',').length);
       vids = vsData.items||[];
     }
+    const subCount = parseInt(ch.statistics?.subscriberCount)||0;
+    const viewCount = parseInt(ch.statistics?.viewCount)||0;
+    const videoCount = parseInt(ch.statistics?.videoCount)||0;
+    const avgViewsPerVideo = videoCount ? Math.round(viewCount/videoCount) : 0;
     document.getElementById('channelResult').innerHTML = `
       <div class="channel-card">
         <img class="ch-avatar" src="${ch.snippet?.thumbnails?.default?.url||''}" alt="">
         <div style="flex:1">
           <div class="ch-name">${ch.snippet?.title||''}</div>
-          <div class="ch-desc">${(ch.snippet?.description||'').slice(0,100)}...</div>
+          <div class="ch-desc">${(ch.snippet?.description||'Không có mô tả').slice(0,150)}...</div>
           <div class="stats-row">
-            <div class="stat-box"><div class="stat-label">Subscribers</div><div class="stat-val" style="color:#ff4d4d">${fmtNum(ch.statistics?.subscriberCount)}</div></div>
-            <div class="stat-box"><div class="stat-label">Total Views</div><div class="stat-val" style="color:#ff8c42">${fmtNum(ch.statistics?.viewCount)}</div></div>
+            <div class="stat-box"><div class="stat-label">Subscribers (Theo dõi)</div><div class="stat-val" style="color:#a78bfa">${fmtNum(ch.statistics?.subscriberCount)}</div></div>
+            <div class="stat-box"><div class="stat-label">Total Views (Tổng views)</div><div class="stat-val" style="color:#ff8c42">${fmtNum(ch.statistics?.viewCount)}</div></div>
             <div class="stat-box"><div class="stat-label">Videos</div><div class="stat-val" style="color:#ffd166">${fmtNum(ch.statistics?.videoCount)}</div></div>
+            <div class="stat-box"><div class="stat-label">Avg Views/Video (TB views)</div><div class="stat-val" style="color:#4dff9b">${fmtNum(avgViewsPerVideo)}</div></div>
           </div>
         </div>
       </div>
-      <div class="section-label">VIDEO GẦN ĐÂY NHẤT (RECENT VIDEOS)</div>
+      <div class="section-label">TOP VIDEOS NHIỀU VIEWS NHẤT (Most viewed videos)</div>
       <div class="video-grid">${vids.map(v=>`
         <div class="vg-card">
           <img src="${v.snippet?.thumbnails?.medium?.url||''}" alt="">
           <div class="vg-body">
             <div class="vg-title">${v.snippet?.title||''}</div>
-            <div class="tags"><span class="badge">${fmtNum(v.statistics?.viewCount)}</span><span class="badge green">${fmtNum(v.statistics?.likeCount)} ❤️</span></div>
+            <div class="tags">
+              <span class="badge">${fmtNum(v.statistics?.viewCount)}</span>
+              <span class="badge green">${fmtNum(v.statistics?.likeCount)} ❤️</span>
+              <span class="badge purple">⏱ ${fmtDuration(v.contentDetails?.duration)}</span>
+              <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" class="badge red">▶ YT</a>
+            </div>
           </div>
         </div>`).join('')}
       </div>`;
