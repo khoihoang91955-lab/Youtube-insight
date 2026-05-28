@@ -328,7 +328,7 @@ async function fetchVideos() {
   document.getElementById('detailPanel').innerHTML = '<div class="empty">← NHẤN VÀO VIDEO ĐỂ XEM CHI TIẾT</div>';
 
   try {
-    let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&regionCode=US&type=video&maxResults=${maxResults}&order=${sort}&videoDuration=${duration}&key=${API_KEY}`;
+    let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&regionCode=US&relevanceLanguage=en&type=video&maxResults=${maxResults}&order=${sort}&videoDuration=${duration}&key=${API_KEY}`;
     if(dateRange) {
       const d = new Date();
       d.setDate(d.getDate() - parseInt(dateRange));
