@@ -375,6 +375,7 @@ function renderVideoList(videos, q) {
   list.innerHTML = videos.map((v,i) => {
     const rate = er(v.statistics?.viewCount, v.statistics?.likeCount, v.statistics?.commentCount);
     const dur = fmtDuration(v.contentDetails?.duration);
+    const ytUrl = `https://www.youtube.com/watch?v=${v.id}`;
     return `<div class="video-card" onclick="showDetail(${i})" id="vc-${i}">
       <div class="rank">${i+1}</div>
       <div class="video-info">
@@ -384,6 +385,7 @@ function renderVideoList(videos, q) {
           <span class="badge green">${fmtNum(v.statistics?.likeCount)} likes</span>
           <span class="badge ${parseFloat(rate)>2?'green':'gray'}">${rate}% ER</span>
           ${dur?`<span class="dur-badge">⏱ ${dur}</span>`:''}
+          <a href="${ytUrl}" target="_blank" onclick="event.stopPropagation()" style="background:#ff000022;color:#ff4444;border:1px solid #ff444444;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;text-decoration:none;">▶ YouTube</a>
         </div>
       </div>
     </div>`;
@@ -402,6 +404,7 @@ async function showDetail(idx) {
       <div class="detail-body">
         <div class="detail-title">${v.snippet?.title||''}</div>
         <div class="detail-sub">${v.snippet?.channelTitle||''} • ${new Date(v.snippet?.publishedAt).toLocaleDateString('vi-VN')} ${dur?'• ⏱ '+dur:''}</div>
+        <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="display:inline-block;margin-bottom:12px;background:#ff0000;color:#fff;border-radius:6px;padding:7px 16px;font-size:11px;font-weight:700;text-decoration:none;letter-spacing:1px;">▶ XEM TRÊN YOUTUBE</a>
         <div class="stats-row">
           <div class="stat-box"><div class="stat-label">Views</div><div class="stat-val" style="color:#ff8c42">${fmtNum(v.statistics?.viewCount)}</div></div>
           <div class="stat-box"><div class="stat-label">Likes</div><div class="stat-val" style="color:#4dff9b">${fmtNum(v.statistics?.likeCount)}</div></div>
